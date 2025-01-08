@@ -1,12 +1,17 @@
-[[ -r ~/.bashrc ]] && . ~/.bashrc
-[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
+if [[ -d "$HOME" ]]; then
+    [[ -r ~/.bashrc ]] && . ~/.bashrc
+    [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
-if [[ -f ~/.config/color ]]; then
-    COLOR=$(cat ~/.config/color)
+    if [[ -f ~/.config/color ]]; then
+        COLOR=$(cat ~/.config/color)
+    else
+        colors=("red" "green" "blue" "yellow" "cyan" "magenta")
+        COLOR=${colors[$RANDOM % ${#colors[@]}]}
+        echo $COLOR >~/.config/color
+    fi
 else
     colors=("red" "green" "blue" "yellow" "cyan" "magenta")
     COLOR=${colors[$RANDOM % ${#colors[@]}]}
-    echo $COLOR >~/.config/color
 fi
 
 function get_color {
@@ -37,9 +42,9 @@ function get_color {
 
 function set_prompt {
     LAST_RESULT=$?
-    COLOR_SUPPORT=$(tput colors)
+    COLOR_SUPPORT=$(tput colors 2>/dev/null || echo 8)
 
-    if [[ $COLOR_SUPPORT -lt 8 ]] || [[ -n $NO_COLOR ]]; then
+    if [[ $COLOR_SUPPORT -lt 8 ]] || [[ $TERM != *"xterm"* && $TERM != *"screen"* && $TERM != *"color"* ]] || [[ -n $NO_COLOR ]]; then
         PS1="($LAST_RESULT) \h - \u - $PWD # "
         return
     fi
