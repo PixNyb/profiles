@@ -45,11 +45,7 @@ precmd() {
             PROMPT='%F{black}(%B%F{'$LAST_RESULT_COLOR'}'$LAST_RESULT'%b%F{black}) %F{'$COLOR'}%m %F{black}- %B%F{'$COLOR'}%n%b %F{black}- %F{black}%~%b %F{black}%# %f'
         fi
     else
-        if sudo -n true 2>/dev/null; then
-            PROMPT='('$LAST_RESULT') %m - %n - %~ %#'
-        else
-            PROMPT='('$LAST_RESULT') %m - %n - %~ %'
-        fi
+        PROMPT='('$LAST_RESULT') %m - %n - %~ %'
     fi
 }
 
