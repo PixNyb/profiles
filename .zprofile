@@ -1,14 +1,19 @@
 autoload -U colors && colors
 
-[[ -r ~/.zshrc ]] && . ~/.zshrc
-[[ -f ~/.zsh_aliases ]] && . ~/.zsh_aliases
+if [ -d "$HOME" ]; then
+    [[ -r ~/.zshrc ]] && . ~/.zshrc
+    [[ -f ~/.zsh_aliases ]] && . ~/.zsh_aliases
 
-if [[ -f ~/.config/color ]]; then
-    COLOR=$(cat ~/.config/color)
+    if [[ -f ~/.config/color ]]; then
+        COLOR=$(cat ~/.config/color)
+    else
+        colors=("red" "green" "blue" "yellow" "cyan" "magenta")
+        COLOR=${colors[$RANDOM % ${#colors[@]}]}
+        echo $COLOR >~/.config/color
+    fi
 else
     colors=("red" "green" "blue" "yellow" "cyan" "magenta")
     COLOR=${colors[$RANDOM % ${#colors[@]}]}
-    echo $COLOR >~/.config/color
 fi
 
 # Check if the terminal supports colors
@@ -20,9 +25,9 @@ fi
 
 precmd() {
     LAST_RESULT=$?
-    COLOR_SUPPORT=$(tput colors)
+    COLOR_SUPPORT=$(tput colors 2>/dev/null || echo 8)
 
-    if [[ $COLOR_SUPPORT -lt 8 ]] || [[ -n $NO_COLOR ]]; then
+    if [[ $COLOR_SUPPORT -lt 8 ]] || [[ $TERM != *"xterm"* && $TERM != *"screen"* && $TERM != *"color"* ]] || [[ -n $NO_COLOR ]]; then
         PROMPT='('$LAST_RESULT') %m - %n - %~ %# '
         return
     fi
