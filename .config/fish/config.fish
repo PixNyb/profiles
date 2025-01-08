@@ -1,19 +1,24 @@
 set -U colors red green blue yellow cyan magenta white
 set -U fish_greeting ''
 
-if test -f ~/.config/color
-    set COLOR (cat ~/.config/color)
+if test -d $HOME
+    if test -f ~/.config/color
+        set COLOR (cat ~/.config/color)
+    else
+        set -l colors red green blue yellow cyan magenta
+        set COLOR $colors[(math (random) % (count $colors) + 1)]
+        echo $COLOR > ~/.config/color
+    end
 else
     set -l colors red green blue yellow cyan magenta
     set COLOR $colors[(math (random) % (count $colors) + 1)]
-    echo $COLOR > ~/.config/color
 end
 
 function fish_prompt
     set -l LAST_RESULT $status
-    set -l COLOR_SUPPORT (tput colors)
+    set -l COLOR_SUPPORT (tput colors 2>/dev/null; or echo 8)
 
-    if test $COLOR_SUPPORT -lt 8; or set -q NO_COLOR
+    if test $COLOR_SUPPORT -lt 8; or test $TERM != *"xterm"*; and test $TERM != *"screen"*; or test -n $NO_COLOR
         echo '('$LAST_RESULT') '(hostname)' - '(whoami)' - '$PWD' > '
         return
     end
