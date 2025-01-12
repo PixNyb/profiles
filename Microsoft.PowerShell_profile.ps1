@@ -1,4 +1,11 @@
-$ColorConfigPath = Join-Path $env:APPDATA "PowerShell\color.txt"
+# If there is no appdata, set it to the home directory + .config
+$Separator = [System.IO.Path]::DirectorySeparatorChar
+
+if ($env:APPDATA) {
+    $ColorConfigPath = Join-Path $env:APPDATA "PowerShell${Separator}color.txt"
+} else {
+    $ColorConfigPath = Join-Path $env:HOME ".config${Separator}color.txt"
+}
 
 if (!(Test-Path (Split-Path $ColorConfigPath))) {
     New-Item -ItemType Directory -Path (Split-Path $ColorConfigPath) -Force | Out-Null
@@ -25,7 +32,18 @@ function Get-ColorCode($color) {
 }
 
 function prompt {
-    $IS_ADMIN = (New-Object Security.Principal.WindowsPrincipal ([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+    $IS_ADMIN = $false
+    # TODO: add exit code support
+    if ($IsWindows) {
+        $IS_ADMIN = (New-Object Security.Principal.WindowsPrincipal ([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+        $HOSTNAME = $env:COMPUTERNAME
+        $USER = $env:USERNAME
+    } elseif ($IsLinux -or $IsMacOS) {
+        $IS_ADMIN = (sudo -n true 2>/dev/null)
+        $HOSTNAME = (hostname)
+        $USER = (whoami)
+    }
+
     $COLOR_SUPPORT = $true
     $RELATIVE_PATH = $PWD.Path
 
@@ -37,8 +55,8 @@ function prompt {
         return "$env:COMPUTERNAME - $env:USERNAME - $RELATIVE_PATH PS> "
     }
 
-    $hostSegment = "`e[0;$(Get-ColorCode $COLOR)m$env:COMPUTERNAME`e[0m"
-    $userSegment = "`e[1;$(Get-ColorCode $COLOR)m$env:USERNAME`e[0m"
+    $hostSegment = "`e[0;$(Get-ColorCode $COLOR)m$HOSTNAME`e[0m"
+    $userSegment = "`e[1;$(Get-ColorCode $COLOR)m$USER`e[0m"
     $pathSegment = "`e[30m$RELATIVE_PATH`e[0m"
     if ($IS_ADMIN) {
         $promptDelimiter = "`e[1;31mPS> `e[0m"

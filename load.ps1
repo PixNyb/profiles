@@ -1,11 +1,18 @@
 # Define the source and destination paths
-$sourcePath = "./Microsoft.PowerShell_profile.ps1"
-$destinationPath = "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+$Separator = [System.IO.Path]::DirectorySeparatorChar
+$sourcePath = "$PSScriptRoot${Separator}load.ps1"
+$destinationPath = "$PROFILE"
 
 # Create the destination directory if it doesn't exist
 $destinationDir = [System.IO.Path]::GetDirectoryName($destinationPath)
 if (-not (Test-Path -Path $destinationDir)) {
     New-Item -ItemType Directory -Path $destinationDir -Force
+}
+
+# If there already is a profile script, rename it
+if (Test-Path -Path $destinationPath) {
+    $backupPath = "$destinationPath.bak"
+    Move-Item -Path $destinationPath -Destination $backupPath -Force
 }
 
 # Copy the profile script to the destination
