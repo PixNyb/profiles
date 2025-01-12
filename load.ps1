@@ -1,6 +1,6 @@
 # Define the source and destination paths
 $Separator = [System.IO.Path]::DirectorySeparatorChar
-$sourcePath = "$PSScriptRoot${Separator}load.ps1"
+$sourcePath = "$PSScriptRoot${Separator}Microsoft.PowerShell_profile.ps1"
 $destinationPath = "$PROFILE"
 
 # Create the destination directory if it doesn't exist

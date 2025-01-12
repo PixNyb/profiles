@@ -17,7 +17,8 @@ try {
 
 $WorkDir = Get-Location
 Set-Location -Path "$HOME${Separator}.profiles"
-./load.ps1
+# Execute the load.ps1 script
+& "${PSScriptRoot}${Separator}load.ps1"
 
 # Remove the cloned repository
 Set-Location -Path $WorkDir
