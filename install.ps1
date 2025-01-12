@@ -9,7 +9,7 @@ if (-not $GIT_CMD) {
 # Install the profile files
 $Separator = [System.IO.Path]::DirectorySeparatorChar
 try {
-    git clone https://github.com/pixnyb/profiles.git "$HOME${Separator}.profiles"
+    git clone https://github.com/pixnyb/profiles.git "$HOME${Separator}.profiles" -q
 } catch {
     Write-Error 'Error: failed to clone the repository.'
     exit 1
@@ -18,7 +18,7 @@ try {
 $WorkDir = Get-Location
 Set-Location -Path "$HOME${Separator}.profiles"
 # Execute the load.ps1 script
-& "${PSScriptRoot}${Separator}load.ps1"
+& ".${Separator}load.ps1"
 
 # Remove the cloned repository
 Set-Location -Path $WorkDir

@@ -7,7 +7,7 @@ if ! [ -x $GIT_CMD ]; then
 fi
 
 # Install the profile files
-$GIT_CMD clone https://github.com/pixnyb/profiles.git $HOME/.profiles 1>/dev/null 2>&1
+$GIT_CMD clone https://github.com/pixnyb/profiles.git $HOME/.profiles 1>/dev/null
 RES=$?
 if [ $RES -ne 0 ]; then
     echo 'Error: failed to clone the repository.' >&2
