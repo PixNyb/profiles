@@ -21,7 +21,7 @@ Set-Location -Path "$HOME${Separator}.profiles"
 # Start of load.ps1, Microsoft security doesn't permit the use of current location scripts
 # Define the source and destination paths
 $Separator = [System.IO.Path]::DirectorySeparatorChar
-$sourcePath = "$PSScriptRoot${Separator}Microsoft.PowerShell_profile.ps1"
+$sourcePath = ".${Separator}Microsoft.PowerShell_profile.ps1"
 $destinationPath = "$PROFILE"
 
 # Create the destination directory if it doesn't exist
