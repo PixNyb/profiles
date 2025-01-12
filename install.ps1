@@ -17,8 +17,30 @@ try {
 
 $WorkDir = Get-Location
 Set-Location -Path "$HOME${Separator}.profiles"
-# Execute the load.ps1 script
-& ".${Separator}load.ps1"
+
+# Start of load.ps1, Microsoft security doesn't permit the use of current location scripts
+# Define the source and destination paths
+$Separator = [System.IO.Path]::DirectorySeparatorChar
+$sourcePath = "$PSScriptRoot${Separator}Microsoft.PowerShell_profile.ps1"
+$destinationPath = "$PROFILE"
+
+# Create the destination directory if it doesn't exist
+$destinationDir = [System.IO.Path]::GetDirectoryName($destinationPath)
+if (-not (Test-Path -Path $destinationDir)) {
+    New-Item -ItemType Directory -Path $destinationDir -Force
+}
+
+# If there already is a profile script, rename it
+if (Test-Path -Path $destinationPath) {
+    $backupPath = "$destinationPath.bak"
+    Move-Item -Path $destinationPath -Destination $backupPath -Force
+}
+
+# Copy the profile script to the destination
+Copy-Item -Path $sourcePath -Destination $destinationPath -Force
+
+Write-Output "Installing profile for PowerShell"
+# End of load.ps1
 
 # Remove the cloned repository
 Set-Location -Path $WorkDir
