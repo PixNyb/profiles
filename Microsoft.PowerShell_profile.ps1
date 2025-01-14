@@ -57,12 +57,12 @@ function prompt {
 
     $hostSegment = "`e[0;$(Get-ColorCode $COLOR)m$HOSTNAME`e[0m"
     $userSegment = "`e[1;$(Get-ColorCode $COLOR)m$USER`e[0m"
-    $pathSegment = "`e[30m$RELATIVE_PATH`e[0m"
+    $pathSegment = "`e[90m$RELATIVE_PATH`e[0m"
     if ($IS_ADMIN) {
         $promptDelimiter = "`e[1;31mPS> `e[0m"
     } else {
-        $promptDelimiter = "`e[30mPS> `e[0m"
+        $promptDelimiter = "`e[90mPS> `e[0m"
     }
 
-    return "$hostSegment `e[30m-`e[0m $userSegment `e[30m-`e[0m $pathSegment $promptDelimiter"
+    return "$hostSegment `e[90m-`e[0m $userSegment `e[90m-`e[0m $pathSegment $promptDelimiter"
 }

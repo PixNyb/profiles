@@ -1,4 +1,4 @@
-set -U colors red green blue yellow cyan magenta white
+set -U colors red green blue yellow cyan magenta white brblack
 set -U fish_greeting ''
 
 if test -d $HOME
@@ -17,9 +17,13 @@ end
 function fish_prompt
     set -l LAST_RESULT $status
     set -l COLOR_SUPPORT (tput colors 2>/dev/null; or echo 8)
+    set -l RELATIVE_PATH (string replace -r "^$HOME" "~" $PWD)
 
-    if test $COLOR_SUPPORT -lt 8; or test $TERM != *"xterm"*; and test $TERM != *"screen"*; or test -n $NO_COLOR
-        echo '('$LAST_RESULT') '(hostname)' - '(whoami)' - '$PWD' > '
+    if test $COLOR_SUPPORT -lt 8
+        or not string match -qr 'xterm' -- $TERM
+        and not string match -qr 'screen' -- $TERM
+        or test -n "$NO_COLOR"
+        echo '('$LAST_RESULT') '(hostname)' - '(whoami)' - '$RELATIVE_PATH' > '
         return
     end
 
@@ -29,11 +33,9 @@ function fish_prompt
         set LAST_RESULT (set_color --bold white)$LAST_RESULT(set_color normal)
     end
 
-    set -l RELATIVE_PATH (string replace -r "^$HOME" "~" $PWD)
-
     if sudo -n true 2>/dev/null
-        echo (set_color black)'('$LAST_RESULT(set_color black)') '(set_color $COLOR)(hostname) (set_color black)'- '(set_color --bold $COLOR)(whoami)(set_color normal) (set_color black)'- '(set_color black)$RELATIVE_PATH (set_color --bold red)'> '(set_color normal)
+        echo (set_color brblack)'('$LAST_RESULT(set_color brblack)') '(set_color $COLOR)(hostname) (set_color brblack)'- '(set_color --bold $COLOR)(whoami)(set_color normal) (set_color brblack)'- '(set_color brblack)$RELATIVE_PATH (set_color --bold red)'> '(set_color normal)
     else
-        echo (set_color black)'('$LAST_RESULT(set_color black)') '(set_color $COLOR)(hostname) (set_color black)'- '(set_color --bold $COLOR)(whoami)(set_color normal) (set_color black)'- '(set_color black)$RELATIVE_PATH (set_color black)'> '(set_color normal)
+        echo (set_color brblack)'('$LAST_RESULT(set_color brblack)') '(set_color $COLOR)(hostname) (set_color brblack)'- '(set_color --bold $COLOR)(whoami)(set_color normal) (set_color brblack)'- '(set_color brblack)$RELATIVE_PATH (set_color brblack)'> '(set_color normal)
     end
 end

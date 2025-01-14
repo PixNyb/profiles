@@ -68,9 +68,9 @@ function set_prompt {
         fi
     else
         if sudo -n true 2>/dev/null; then
-            PS1='\[\e[30m\](\[\e[1;'"$LAST_RESULT_COLOR"'m\]'"$LAST_RESULT"'\[\e[0;30m\]) \[\e[0;'"$(get_color $COLOR)"'m\]\h \[\e[30m\]- \[\e[1;'"$(get_color $COLOR)"'m\]\u\[\e[0;30m\] - \[\e[30m\]'"$RELATIVE_PATH"' \[\e[1;'"$(get_color red)"'m\]#\[\e[0m\] '
+            PS1='\[\e[90m\](\[\e[1;'"$LAST_RESULT_COLOR"'m\]'"$LAST_RESULT"'\[\e[0;90m\]) \[\e[0;'"$(get_color $COLOR)"'m\]\h \[\e[90m\]- \[\e[1;'"$(get_color $COLOR)"'m\]\u\[\e[0;90m\] - \[\e[90m\]'"$RELATIVE_PATH"' \[\e[1;'"$(get_color red)"'m\]#\[\e[0m\] '
         else
-            PS1='\[\e[30m\](\[\e[1;'"$LAST_RESULT_COLOR"'m\]'"$LAST_RESULT"'\[\e[0;30m\]) \[\e[0;'"$(get_color $COLOR)"'m\]\h \[\e[30m\]- \[\e[1;'"$(get_color $COLOR)"'m\]\u\[\e[0;30m\] - \[\e[30m\]'"$RELATIVE_PATH"' \[\e[30m\]#\[\e[0m\] '
+            PS1='\[\e[90m\](\[\e[1;'"$LAST_RESULT_COLOR"'m\]'"$LAST_RESULT"'\[\e[0;90m\]) \[\e[0;'"$(get_color $COLOR)"'m\]\h \[\e[90m\]- \[\e[1;'"$(get_color $COLOR)"'m\]\u\[\e[0;90m\] - \[\e[90m\]'"$RELATIVE_PATH"' \[\e[90m\]#\[\e[0m\] '
         fi
     fi
 }

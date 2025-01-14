@@ -40,9 +40,9 @@ precmd() {
 
     if $SUPPORTS_COLORS; then
         if sudo -n true 2>/dev/null; then
-            PROMPT='%F{black}(%B%F{'$LAST_RESULT_COLOR'}'$LAST_RESULT'%b%F{black}) %F{'$COLOR'}%m %F{black}- %B%F{'$COLOR'}%n%b %F{black}- %F{black}%~%b %B%F{red}%#%b %f'
+            PROMPT='%F{8}(%B%F{'$LAST_RESULT_COLOR'}'$LAST_RESULT'%b%F{8}) %F{'$COLOR'}%m %F{8}- %B%F{'$COLOR'}%n%b %F{8}- %F{8}%~%b %B%F{red}%#%b %f'
         else
-            PROMPT='%F{black}(%B%F{'$LAST_RESULT_COLOR'}'$LAST_RESULT'%b%F{black}) %F{'$COLOR'}%m %F{black}- %B%F{'$COLOR'}%n%b %F{black}- %F{black}%~%b %F{black}%# %f'
+            PROMPT='%F{8}(%B%F{'$LAST_RESULT_COLOR'}'$LAST_RESULT'%b%F{8}) %F{'$COLOR'}%m %F{8}- %B%F{'$COLOR'}%n%b %F{8}- %F{8}%~%b %F{8}%# %f'
         fi
     else
         PROMPT='('$LAST_RESULT') %m - %n - %~ %'
