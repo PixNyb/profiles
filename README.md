@@ -23,7 +23,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/pixnyb/profiles/main/insta
 To install the PowerShell shell profile on Windows, run the following command in PowerShell / Terminal:
 
 ```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/pixnyb/profiles/main/install.ps1'))
+irm https://raw.githubusercontent.com/pixnyb/profiles/main/install.ps1 | iex
 ```
 
 ## Supported Shells
