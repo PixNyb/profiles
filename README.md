@@ -14,8 +14,22 @@ To install a shell profile, you can either use the install scripts ([install.sh]
 
 To install the bash shell profile, run the following command:
 
+#### curl
+
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/pixnyb/profiles/main/install.sh)"
+```
+
+#### wget
+
+```shell
+sh -c "$(wget -qO- https://raw.githubusercontent.com/pixnyb/profiles/main/install.sh)"
+```
+
+#### fetch
+
+```shell
+sh -c "$(fetch -o - https://raw.githubusercontent.com/pixnyb/profiles/main/install.sh)"
 ```
 
 ### Windows
